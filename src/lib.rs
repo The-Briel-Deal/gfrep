@@ -6,16 +6,15 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
+        args.next(); // The first arg (executable path) has no use here.
         let query = args
-            .get(1)
-            .ok_or("Nothing was specified for the query param!!!")?
-            .clone();
+            .next()
+            .ok_or("Nothing was specified for the query param!!!")?;
 
         let file_path = args
-            .get(2)
-            .ok_or("Nothing was specified for the filepath param!!!")?
-            .clone();
+            .next()
+            .ok_or("Nothing was specified for the filepath param!!!")?;
 
         Ok(Config { query, file_path })
     }
