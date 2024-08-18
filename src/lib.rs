@@ -23,9 +23,9 @@ impl Config {
 
 pub fn run(config: Config) -> Result<(), std::io::Error> {
     let contents = fs::read_to_string(config.file_path)?;
-    for line in search(&config.query, &contents) {
-        println!("{line}");
-    }
+    search(&config.query, &contents)
+        .iter()
+        .for_each(|l| println!("{l}"));
     Ok(())
 }
 
